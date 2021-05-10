@@ -1,0 +1,223 @@
+node n1 {
+    type router
+    model host
+    network-config {
+	hostname Broker
+	!
+	interface eth0
+	 ip address 10.0.5.10/24
+	 ipv6 address 2001:5::10/64
+	 mac address 00:00:00:aa:00:0b
+	!
+    }
+    canvas c1
+    iconcoords {1056.0 92.0}
+    labelcoords {1056.0 124.0}
+    services {DefaultRoute SSH}
+    interface-peer {eth0 n10}
+    custom-image /home/ilab/Desktop/RomeoAndJuliet/Pictures/broker.png
+}
+
+node n2 {
+    type router
+    model host
+    network-config {
+	hostname CD
+	!
+	interface eth0
+	 ip address 10.0.1.10/24
+	 ipv6 address 2001:1::10/64
+	 mac address 00:00:00:aa:00:03
+	!
+    }
+    canvas c1
+    iconcoords {1531.0 337.0}
+    labelcoords {1531.0 369.0}
+    services {DefaultRoute SSH}
+    interface-peer {eth0 n10}
+    custom-image /home/ilab/Desktop/RomeoAndJuliet/Pictures/sensor.png
+}
+
+node n3 {
+    type router
+    model host
+    network-config {
+	hostname BC
+	!
+	interface eth0
+	 ip address 10.0.0.10/24
+	 ipv6 address 2001::10/64
+	 mac address 00:00:00:aa:00:01
+	!
+    }
+    canvas c1
+    iconcoords {1053.0 310.0}
+    labelcoords {1053.0 342.0}
+    services {DefaultRoute SSH}
+    interface-peer {eth0 n10}
+    custom-image /home/ilab/Desktop/RomeoAndJuliet/Pictures/sensor.png
+}
+
+node n4 {
+    type router
+    model host
+    network-config {
+	hostname AB
+	!
+	interface eth0
+	 ip address 10.0.4.10/24
+	 ipv6 address 2001:4::10/64
+	 mac address 00:00:00:aa:00:09
+	!
+    }
+    canvas c1
+    iconcoords {802.0 319.0}
+    labelcoords {802.0 351.0}
+    services {DefaultRoute SSH}
+    interface-peer {eth0 n10}
+    custom-image /home/ilab/Desktop/RomeoAndJuliet/Pictures/sensor.png
+}
+
+node n6 {
+    type router
+    model host
+    network-config {
+	hostname Drohne
+	!
+	interface eth0
+	 ip address 10.0.3.10/24
+	 ipv6 address 2001:3::10/64
+	 mac address 00:00:00:aa:00:07
+	!
+    }
+    canvas c1
+    iconcoords {304.0 333.0}
+    labelcoords {304.0 365.0}
+    services {DefaultRoute SSH}
+    interface-peer {eth0 n10}
+    custom-image /home/ilab/Desktop/RomeoAndJuliet/Pictures/smallDrone.png
+}
+
+node n7 {
+    type router
+    model host
+    network-config {
+	hostname IoT
+	!
+	interface eth0
+	 ip address 10.0.2.10/24
+	 ipv6 address 2001:0::10/64
+	!
+    }
+    canvas c1
+    iconcoords {722.0 86.0}
+    labelcoords {722.0 118.0}
+    services {DefaultRoute SSH}
+    interface-peer {eth0 n10}
+    custom-image /home/ilab/Desktop/RomeoAndJuliet/Pictures/IoT.png
+}
+
+node n10 {
+    type router
+    model router
+    network-config {
+	hostname Router
+	!
+	interface eth2
+	 ip address 10.0.2.1/24
+	 ipv6 address 2001:0::1/64
+	!
+	interface eth4
+	 ip address 10.0.4.1/24
+	 ipv6 address 2001:4::1/64
+	 mac address 00:00:00:aa:00:08
+	!
+	interface eth0
+	 ip address 10.0.0.1/24
+	 ipv6 address 2001::1/64
+	 mac address 00:00:00:aa:00:00
+	!
+	interface eth3
+	 ip address 10.0.3.1/24
+	 ipv6 address 2001:3::1/64
+	 mac address 00:00:00:aa:00:06
+	!
+	interface eth5
+	 ip address 10.0.5.1/24
+	 ipv6 address 2001:5::1/64
+	 mac address 00:00:00:aa:00:0a
+	!
+	interface eth1
+	 ip address 10.0.1.1/24
+	 ipv6 address 2001:1::1/64
+	 mac address 00:00:00:aa:00:02
+	!
+    }
+    canvas c1
+    iconcoords {843.0 170.0}
+    labelcoords {843.0 202.0}
+    services {zebra OSPFv2 OSPFv3 vtysh IPForward}
+    interface-peer {eth1 n2}
+    interface-peer {eth5 n1}
+    interface-peer {eth3 n6}
+    interface-peer {eth0 n3}
+    interface-peer {eth4 n4}
+    interface-peer {eth2 n7}
+}
+
+link l1 {
+    nodes {n10 n2}
+}
+
+link l2 {
+    nodes {n10 n1}
+}
+
+link l3 {
+    nodes {n10 n6}
+}
+
+link l4 {
+    nodes {n10 n3}
+}
+
+link l5 {
+    nodes {n10 n4}
+}
+
+link l6 {
+    nodes {n7 n10}
+    bandwidth 0
+}
+
+canvas c1 {
+    name {Canvas1}
+    refpt {0 0 47.5791667 -122.132322 2.0}
+    scale {150.0}
+    size {1920 832}
+    wallpaper-style {scaled}
+    wallpaper {/home/ilab/Desktop/RomeoAndJuliet/Pictures/Background.png}
+}
+
+option global {
+    interface_names yes
+    ip_addresses yes
+    ipv6_addresses yes
+    node_labels yes
+    link_labels yes
+    show_api no
+    background_images no
+    annotations yes
+    grid no
+    traffic_start 0
+}
+
+option session {
+    controlnet=
+    controlnet_updown_script=
+    enablerj45=1
+    enablesdt=0
+    preservedir=0
+    sdturl=tcp://127.0.0.1:50000/
+}
+
